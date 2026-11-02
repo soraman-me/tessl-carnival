@@ -275,7 +275,7 @@ export interface GroundLayer {
 }
 
 /**
- * Draws the parts of the ground that never change (the grass, paths, trees
+ * Draws the parts of the ground that never change (the grid, paths, trees
  * and the hedge's back two sides) once, onto an off-screen canvas covering
  * groundBounds(map). It uses `scale` device pixels per world pixel, or less
  * when that would make the canvas too big, so its size stays bounded however
@@ -296,18 +296,21 @@ export function drawGroundLayer(map: MidwayMap, wanted: number): GroundLayer {
   for (const path of map.paths) poly(ctx, rectPoints(path, 3), palette.grassEdge);
   for (const path of map.paths) poly(ctx, rectPoints(path), palette.path);
 
-  // Tufts of grass.
+  // A glowing grid across the ground, one line per tile.
   ctx.strokeStyle = palette.grassDark;
   ctx.lineWidth = 1;
   ctx.beginPath();
-  for (let y = 1; y < map.height - 1; y++) {
-    for (let x = 1; x < map.width - 1; x++) {
-      if (map.ground[y * map.width + x] !== 'grass' || hash(x, y) > 0.5) continue;
-      const [px, py] = at(x + hash(x, y, 1), y + hash(x, y, 2));
-      ctx.moveTo(px - 2, py - 2);
-      ctx.lineTo(px, py);
-      ctx.lineTo(px + 2, py - 3);
-    }
+  for (let x = 1; x < map.width; x++) {
+    const [ax, ay] = at(x, 0);
+    const [bx, by] = at(x, map.height);
+    ctx.moveTo(ax, ay);
+    ctx.lineTo(bx, by);
+  }
+  for (let y = 1; y < map.height; y++) {
+    const [ax, ay] = at(0, y);
+    const [bx, by] = at(map.width, y);
+    ctx.moveTo(ax, ay);
+    ctx.lineTo(bx, by);
   }
   ctx.stroke();
 
