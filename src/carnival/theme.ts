@@ -4,31 +4,31 @@
  */
 export const theme = {
   colors: {
-    background: '#1b1035',
-    surface: '#2a1a52',
-    text: '#fff8e7',
-    muted: '#b9a9d9',
-    accent: '#ffcc33',
-    danger: '#ff5a5f',
-    stripeA: '#e63946',
-    stripeB: '#fff8e7',
-    water: '#5ec8f2',
-    wood: '#8a5a3b',
+    background: '#070b1a',
+    surface: '#111a33',
+    text: '#e6f7ff',
+    muted: '#8a9cc2',
+    accent: '#00e5ff',
+    danger: '#ff2e88',
+    stripeA: '#c026ff',
+    stripeB: '#e6f7ff',
+    water: '#5b8cff',
+    wood: '#3a4766',
   },
   font: {
-    family: '"Trebuchet MS", "Segoe UI", system-ui, sans-serif',
+    family: '"Eurostile", "Bank Gothic", "Segoe UI", "Roboto", system-ui, sans-serif',
     small: 14,
     body: 18,
     title: 32,
   },
-  radius: 12,
+  radius: 6,
   canvas: {
     width: 800,
     height: 500,
   },
 } as const;
 
-/** Canvas font string, e.g. canvasFont('title') → 'bold 32px "Trebuchet MS", …'. */
+/** Canvas font string, e.g. canvasFont('title') → 'bold 32px "Eurostile", …'. */
 export function canvasFont(size: 'small' | 'body' | 'title', weight: 'normal' | 'bold' = 'normal') {
   return `${weight} ${theme.font[size]}px ${theme.font.family}`;
 }
